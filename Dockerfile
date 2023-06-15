@@ -1,13 +1,12 @@
-FROM linuxmintd/mint20.3-amd64
+FROM amazonlinux:2023
 
-RUN apt update
+RUN yum update
 
-RUN apt install -y curl
+RUN yum install -y git bzip2 tar dbus-glib wget
 
-# Installing node and npm
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash
-RUN apt install -y nodejs
-RUN apt install -y wget
+# Installing node/npm
+RUN wget -sL https://deb.nodesource.com/setup_18.x | bash
+RUN yum install -y nodejs
 
 # Installing testing dependencies
 RUN npm install -g pm2
@@ -22,18 +21,9 @@ RUN tar -xvf apache-maven-3.6.3-bin.tar.gz
 RUN mv apache-maven-3.6.3 /opt/
 
 # Installing Google Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-RUN add-apt-repository "deb http://dl.google.com/linux/chrome/deb/ stable main"
-RUN apt update
-RUN apt install -y google-chrome-stable
+RUN curl https://intoli.com/install-google-chrome.sh | bash
 
 # Instaling Firefox
 RUN wget https://ftp.mozilla.org/pub/firefox/releases/112.0/linux-x86_64/en-US/firefox-112.0.tar.bz2
-RUN tar xjf firefox-112.0.tar.bz2
-RUN mv firefox /opt
-RUN ln -s /opt/firefox/firefox /usr/local/bin/firefox
-
-WORKDIR /myapp
-COPY package.json .
-COPY . .
-# RUN npm i
+RUN tar xvjf firefox-112.0.tar.bz2 -C /usr/local
+RUN ln -s /usr/local/firefox/firefox /usr/bin/firefox
