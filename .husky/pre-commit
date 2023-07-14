@@ -1,6 +1,15 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# ``. "$(dirname -- "$0")/_/husky.sh"
 
-echo "reached to commit ...."
+# echo "reached to commit ...."
 
-exit 1
+# exe=`detect-secret scan`
+
+# if ! [[ $? == 0 ]]; then
+#     echo "package not found..."
+#     exit 1
+# fi
+
+# exit 1
+
+# node test.js $exe
