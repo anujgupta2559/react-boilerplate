@@ -1,14 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import TagManager from 'react-gtm-module';
 
 function App() {
 
-  function pushToLayer(e){
-    const dataLayer = window.dataLayer
-    dataLayer.push({
-      e
-    })
+  const config = {
+    gtmId: "GTM-MHXXQ3CC"
   }
+
+  TagManager.initialize(config)
+  
   return (
 
 <div className="App">
@@ -17,7 +18,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button className='GASample-button' id="GA-7568" href="https://google.com" onClick={(e)=>pushToLayer(e)}>Click me</button>
+        <button className='GASample-button' id="GA-7568" href="https://google.com">Click me</button>
         <a
           className="App-link"
           href="https://reactjs.org"
