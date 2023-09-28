@@ -1,5 +1,7 @@
-name: checkk-branches
-on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
 jobs:
   job1:
     runs-on: ubuntu-latest
