@@ -10,4 +10,4 @@ jobs:
       - run: echo ${{ github.ref }}
       - run: echo ${{ github.head_ref }}
       - run: echo ${{ github.base_ref }}
-      - run: if [ ${{github.head_ref}} == "main"]\then\  echo "main branch can not be the head"\  exit 1
+      - run: if [ ${{github.head_ref}} == "main"]\then\  echo "main branch can not be the head"\  exit 1\  fi
