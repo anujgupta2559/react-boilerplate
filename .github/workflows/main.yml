@@ -6,8 +6,17 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
+    if: ${{ github.head_ref == 'main'}}
     steps:
+      - run: echo "HEAD is equal to (main)"
       - run: echo ${{ github.ref }}
       - run: echo ${{ github.head_ref }}
       - run: echo ${{ github.base_ref }}
-      - run: if [ ${{github.head_ref}} == "main"]\then\  echo "main branch can not be the head"\  exit 1\  fi
+  job2:
+    runs-on: ubuntu-latest
+    if: ${{ github.head_ref != 'main'}}
+    steps:
+      - run: echo "HEAD is NOT equal to (main)"
+      - run: echo ${{ github.ref }}
+      - run: echo ${{ github.head_ref }}
+      - run: echo ${{ github.base_ref }}
