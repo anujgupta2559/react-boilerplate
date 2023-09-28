@@ -6,19 +6,18 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
-    if: ${{ github.head_ref == 'main'}}
     steps:
       - run: 
-         echo "HEAD should not be equal to {main}"
-         exit 1
+         if [ ${{ github.head_ref == 'main'}} ]; then echo "HEAD is equal to {main}" && exit 1; fi
          echo ${{ github.ref }}
          echo ${{ github.head_ref }}
          echo ${{ github.base_ref }}
   job2:
     runs-on: ubuntu-latest
-    if: ${{ github.head_ref != 'main'}}
+    # if: ${{ github.head_ref != 'main'}}
     steps:
-      - run: 
+      - run:
+         if [ ${{ github.head_ref != 'main'}} ]; then echo "HEAD is not equal to {main}"; fi
          echo "HEAD is NOT equal to (main)"
          echo ${{ github.ref }}
          echo ${{ github.head_ref }}
