@@ -1,3 +1,4 @@
+name: check-branch
 on:
   pull_request:
     types:
