@@ -7,7 +7,7 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - run: if [ ${{ github.head_ref == 'main'}} ]; then echo "HEAD is equal to {main}" && exit 1; fi
+      - run: if [ ${{ github.head_ref }} == 'main' ]; then echo "HEAD is equal to {main}" && exit 1; fi
       - run: 
          echo ${{ github.ref }}
          echo ${{ github.head_ref }}
