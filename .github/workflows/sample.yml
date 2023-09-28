@@ -1,0 +1,11 @@
+on:
+  pull_request:
+    types:
+      - opened
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo github.ref
+      - run: echo github.head_ref
+      - run: echo github.base_ref
