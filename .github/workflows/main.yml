@@ -6,10 +6,11 @@ on:
 jobs:
   validate-branches:
       runs-on: ubuntu-latest
+      env:
+        SOURCE: ${{ github.head_ref }}
+        TARGET: ${{ github.base_ref }}
       steps:
         - run:
-            SOURCE=${{ github.head_ref }}
-            TARGET=${{ github.base_ref }}
             echo SOURCE is $SOURCE
             echo TARGET is $TARGET
             exit 1;
