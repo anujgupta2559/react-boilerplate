@@ -1,10 +1,10 @@
-name: check-branch
+name: Validate-pull-request-branch
 on:
   pull_request:
     types:
       - opened
 jobs:
-  validate-branches:
+  validate-branch:
       runs-on: ubuntu-latest
       env:
         SOURCE: ${{ github.head_ref }}
