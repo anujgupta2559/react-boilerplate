@@ -13,7 +13,7 @@ jobs:
         - run:
             echo "DEBUG::SOURCE is $SOURCE & TARGET is $TARGET"
             
-            if [[ "$TARGET" != @(main|staging|develop|pre_develop) ]]; then echo "error:The target branch can not equal {${TARGET}}" && exit 1; fi;
+            if [[ "$TARGET" != @(main|staging|develop|pre_develop|test) ]]; then echo "error:The target branch can not equal {${TARGET}}" && exit 1; fi;
             
             if [ "$SOURCE" == "main" ]; then echo "error:SOURCE branch can not equal to {main}" && exit 1; fi;
            
