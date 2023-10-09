@@ -1,0 +1,44 @@
+name: Validate-pull-request-branch
+on:
+  pull_request:
+    types:
+      - opened
+jobs:
+  validate-branch:
+      runs-on: ubuntu-latest
+      env:
+        SOURCE: ${{ github.head_ref }}
+        TARGET: ${{ github.base_ref }}
+      steps:
+        - run: echo "DEBUG::SOURCE is $SOURCE & TARGET is $TARGET";
+            
+        - run: if [[ "$TARGET" != @(main|staging|develop|pre_develop) ]]; then echo "error:The target branch can not equal {${TARGET}}" && exit 1; fi;
+            
+        - run: if [ "$SOURCE" == "main" ]; then echo "error:SOURCE branch can not equal to {main}" && exit 1; fi;
+           
+        - run: if [[ "$SOURCE" != @(main|staging|develop|pre_develop) ]] && [ "$TARGET" != "pre_develop" ]; then echo "error:The branch {${SOURCE}} need to merge with pre_develop first." && exit 1; fi;
+           
+        - run: if [ "${SOURCE}" == 'pre_develop' ] && [[ "$TARGET" != @(develop|staging) ]]; then echo "error:The branch {${SOURCE}} should target to {develop|staging}" && exit 1; fi;
+          
+        - run: if [ "${SOURCE}" == 'develop' ] && [[ "$TARGET" != @(staging|main) ]]; then echo "error:The branch {${SOURCE}} should target to {staging|main}" && exit 1; fi;
+          
+        - run: if [ "${SOURCE}" == 'staging' ] && [[ "$TARGET" != "main" ]]; then echo "error:The branch {${SOURCE}} should target to {main}" && exit 1; fi;
+
+  # job1:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: if [ ${{ github.head_ref }} == 'main' ]; then echo "HEAD is equal to {main}" && exit 1; fi
+  #     - run: 
+  #        echo ${{ github.ref }}
+  #        echo ${{ github.head_ref }}
+  #        echo ${{ github.base_ref }}
+  # job2:
+  #   runs-on: ubuntu-latest
+  #   # if: ${{ github.head_ref != 'main'}}
+  #   steps:
+  #     - run: if [ ${{ github.head_ref != 'main'}} ]; then echo "HEAD is not equal to {main}"; fi
+  #     - run:
+  #        echo "HEAD is NOT equal to (main)"
+  #        echo ${{ github.ref }}
+  #        echo ${{ github.head_ref }}
+  #        echo ${{ github.base_ref }}
