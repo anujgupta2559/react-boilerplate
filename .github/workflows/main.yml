@@ -1,0 +1,26 @@
+name: check-branch
+on:
+  pull_request:
+    types:
+      - opened
+jobs:
+  validate-branches:
+      runs-on: ubuntu-latest
+      env:
+        SOURCE: ${{ github.head_ref }}
+        TARGET: ${{ github.base_ref }}
+      steps:
+        - run:
+            echo "DEBUG::SOURCE is $SOURCE & TARGET is $TARGET"
+            
+            if [[ "$TARGET" != @(main|staging|develop|pre_develop|test) ]]; then echo "error:The target branch can not equal {${TARGET}}" && exit 1; fi;
+            
+            if [ "$SOURCE" == "main" ]; then echo "error:SOURCE branch can not equal to {main}" && exit 1; fi;
+           
+            if [[ "$SOURCE" != @(main|staging|develop|pre_develop) ]] && [ "$TARGET" != "pre_develop" ]; then echo "error:The branch {${SOURCE}} need to merge with pre_develop first." && exit 1; fi;
+           
+            if [ "${SOURCE}" == 'pre_develop' ] && [[ "$TARGET" != @(develop|staging) ]]; then echo "error:The branch {${SOURCE}} should target to {develop|staging}" && exit 1; fi;
+          
+            if [ "${SOURCE}" == 'develop' ] && [[ "$TARGET" != @(staging|main) ]]; then echo "error:The branch {${SOURCE}} should target to {staging|main}" && exit 1; fi;
+          
+            if [ "${SOURCE}" == 'staging' ] && [[ "$TARGET" != "main" ]]; then echo "error:The branch {${SOURCE}} should target to {main}" && exit 1; fi;
